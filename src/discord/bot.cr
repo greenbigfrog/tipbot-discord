@@ -96,8 +96,6 @@ class DiscordBot
       rl, NoPrivate.new, admin, Prefix.new(@coin))
     @bot.on_message_create(error, config, Command.new("vote"),
       rl, Vote.new)
-    # @bot.on_message_create(error, config, Command.new("psql"),
-    #   rl, bot_admin, PSQL.new(@tip.db))
     @bot.on_message_create(error, config, Command.new("lucky"),
       rl, NoPrivate.new) { |msg, ctx| lucky(msg, ctx) }
     @bot.on_message_create(error, config, Command.new("rain"),
