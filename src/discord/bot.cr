@@ -170,14 +170,8 @@ class DiscordBot
       case cmd
       when .starts_with? "terms"
         reply(msg, TB::TERMS)
-        # when .starts_with? "blocks"
-        #   info = @tip.get_info
-        #   next unless info.is_a?(JSON::Any)
-        #   reply(msg, "Current Block Count (known to the node): **#{info["blocks"]}**")
-        # when .starts_with? "connections"
-        #   info = @tip.get_info
-        #   next unless info.is_a?(JSON::Any)
-        #   reply(msg, "The node has **#{info["connections"]} Connections**")
+      when .starts_with? "status"
+        reply(msg, "Visit <https://status.tipbot.info> for status information")
       when .starts_with? "support"
         reply(msg, "For support please visit <http://tipbot.gbf.re>")
       when .starts_with? "github"
