@@ -5,6 +5,37 @@ require "bot_list"
 require "tb"
 require "tb-worker"
 
+require "crometheus"
+
+module Crometheus
+  module Middleware
+    class DiscordCollector
+      Crometheus.alias EventCounter = Crometheus::Counter[:event]
+
+      # Crometheus.alias LatencyHistogram = Crometheus::Histogram[:event]
+
+      def initialize(@registry = Crometheus.default_registry)
+        @events = EventCounter.new(
+          :discord_events_total,
+          "Total number of Discord WS Events received.",
+          @registry)
+        # @latency = LatencyHistogram.new(
+        #   :discord_latency_seconds,
+        #   "Latency of receiving WS event. (Requires accurate clock for meaningful values.)",
+        #   @registry)
+      end
+
+      def call(event, _ctx)
+        @events[event: event[0]].inc
+
+        # @latency[event: event[0]].observe time_diff
+
+        yield
+      end
+    end
+  end
+end
+
 USER_REGEX     = /<@!?(?<id>\d+)>/
 ZWS            = "​" # There is a zero width space stored here
 CONFIG_COLUMNS = ["min_soak", "min_soak_total", "min_rain", "min_rain_total", "min_tip", "prefix",
@@ -29,6 +60,13 @@ class DiscordBot
     config = ConfigMiddleware.new(@coin)
     typing = TriggerTyping.new
     bot_admin = BotAdmin.new(@coin)
+
+    spawn do
+      server = HTTP::Server.new([Crometheus.default_registry.get_handler])
+      server.bind_tcp "0.0.0.0", 5000
+      server.listen
+    end
+    @bot.on_dispatch(Crometheus::Middleware::DiscordCollector.new)
 
     @bot.on_message_create(error, config, Command.new("ping"),
       rl, Ping.new)
