@@ -88,8 +88,6 @@ class DiscordBot
     #   rl, OnlyPrivate.new, bot_admin, Offsite.new(@coin))
     # @bot.on_message_create(error, config, Command.new("admin"),
     #   rl, OnlyPrivate.new, bot_admin, Admin.new)
-    # @bot.on_message_create(error, config, Command.new("config"),
-    #   rl, NoPrivate.new, admin, ConfigCommand.new)
     @bot.on_message_create(error, config, Command.new("checkconfig"),
       rl, CheckConfig.new)
     @bot.on_message_create(error, config, Command.new("prefix"),
