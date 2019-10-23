@@ -2,7 +2,7 @@ version: 1.0
 shards:
   ameba:
     github: veelenga/ameba
-    version: 0.10.0
+    version: 0.10.1
 
   any_hash:
     github: sija/any_hash.cr
@@ -10,7 +10,7 @@ shards:
 
   bitcoin_rpc:
     github: citizen428/bitcoin_rpc
-    version: 0.4.1
+    version: 5.0.0
 
   bot_list:
     github: z64/bot_list
@@ -22,7 +22,7 @@ shards:
 
   db:
     github: crystal-lang/crystal-db
-    version: 0.5.1
+    version: 0.7.0
 
   discordcr:
     github: greenbigfrog/discordcr
@@ -38,7 +38,7 @@ shards:
 
   pg:
     github: greenbigfrog/crystal-pg
-    commit: e12b2557682e7cbe18206c1e00a30cd83db19db7
+    commit: 764797e80675906c05ca7a0b02c2839f6dbb4522
 
   pool:
     github: ysbaddaden/pool
@@ -50,7 +50,7 @@ shards:
 
   raven:
     github: sija/raven.cr
-    version: 1.5.0
+    version: 1.5.1
 
   redis:
     github: stefanwille/crystal-redis
@@ -58,7 +58,7 @@ shards:
 
   tb:
     github: greenbigfrog/tipbot-common
-    commit: 3f9dc7a23c55b5b67ffbfe4c7563f71465921f30
+    commit: 50e18e81b19a0166ef984322f10c96c205957213
 
   tb-worker:
     github: greenbigfrog/tipbot-worker
