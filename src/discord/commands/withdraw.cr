@@ -28,6 +28,8 @@ class Withdraw
 
     account = TB::Data::Account.read(:discord, msg.author.id.to_u64.to_i64)
     TB::Worker::WithdrawalJob.new(platform: "discord", destination: msg.channel_id.to_s, coin: @coin.id, user: account.id, address: address, amount: amount).enqueue
+    client.create_message(msg.channel_id, "Your withdrawal has been added to the queue. Please hold")
+
     yield
   end
 end
