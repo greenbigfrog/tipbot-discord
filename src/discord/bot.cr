@@ -91,7 +91,7 @@ class DiscordBot
     @bot.on_message_create(error, config, Command.new("checkconfig"),
       rl, CheckConfig.new)
     @bot.on_message_create(error, config, Command.new("prefix"),
-      rl, NoPrivate.new, admin, Prefix.new(@coin))
+      rl, NoPrivate.new, admin, Prefix.new)
     @bot.on_message_create(error, config, Command.new("vote"),
       rl, Vote.new)
     @bot.on_message_create(error, config, Command.new("lucky"),
