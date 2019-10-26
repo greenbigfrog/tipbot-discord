@@ -35,8 +35,9 @@ class Soak
     last_id = 0_u64
 
     loop do
+      # Limit is 1000 users per request
+      break if new_users.size < 1000
       new_users = client.list_guild_members(guild_id, after: last_id)
-      break if new_users.size == 0
       last_id = new_users.last.user.id
       new_users.reject!(&.user.bot)
       new_users.each do |x|
