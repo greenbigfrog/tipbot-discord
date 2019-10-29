@@ -15,7 +15,7 @@ class Soak
     guild_id = guild_id.to_u64
 
     unless ctx[ConfigMiddleware].get_config(msg, "soak")
-      return client.create_message(msg.channel_id, "The owner of this server has disabled #{@coin.prefix}soak. You can contact them and ask them to enable it as they should have received a DM with instructions")
+      return client.create_message(msg.channel_id, "`#{@coin.prefix}soak` is disabled on this server. Any member with the ADMINISTRATOR permission can update the configuration at https://tipbot.info/configuration")
     end
 
     cmd_usage = "#{@coin.prefix}soak [amount]"
