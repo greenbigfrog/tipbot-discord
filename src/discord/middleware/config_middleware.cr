@@ -24,7 +24,7 @@ class ConfigMiddleware
     res || @coin.get("default_#{memo}")
   end
 
-  private def guild_id(msg)
+  def guild_id(msg)
     res = @cache.not_nil!.resolve_channel(msg.channel_id).guild_id
     raise "Somehow we were unable to get a guild_id" unless res
     res.to_u64.to_i64
