@@ -221,8 +221,7 @@ class DiscordBot
     @bot.on_guild_create(error) do |payload|
       id = payload.id.to_u64.to_i64
       if TB::Data::Discord::Guild.new?(id, @coin)
-        guild = TB::Data::Discord::Guild.read_config_id(id, @coin)
-        TB::Worker::NewGuildJob.new(config_id: guild, coin: @coin.id, guild_name: payload.name, owner: payload.owner_id.to_u64.to_i64).enqueue
+        TB::Worker::NewGuildJob.new(guild_id: id, coin: @coin.id, guild_name: payload.name, owner: payload.owner_id.to_u64.to_i64).enqueue
 
         owner = @cache.resolve_user(payload.owner_id)
         embed = Discord::Embed.new(
