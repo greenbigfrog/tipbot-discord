@@ -104,12 +104,12 @@ class DiscordBot
       stats = TB::Data::Statistics.read
       string = String.build do |io|
         io.puts "*Currently the users of this bot have:*"
-        io.puts "Transfered a total of **#{stats.total} #{@coin.name_short}** in #{stats.transaction_sum} transactions"
+        io.puts "Transfered a total of **#{stats.transaction_sum} #{@coin.name_short}** in #{stats.transaction_count} transactions"
         io.puts
         io.puts "Of these **#{stats.tip_sum} #{@coin.name_short}** were tips,"
         io.puts "**#{stats.rain_sum} #{@coin.name_short}** were rains and"
         io.puts "**#{stats.soak_sum} #{@coin.name_short}** were soaks."
-        io.puts "*Last updated at #{TB::Data::Statistics.last}*"
+        io.puts "*Last updated at #{stats.last_refresh}*"
       end
 
       reply(msg, string)

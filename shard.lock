@@ -58,7 +58,7 @@ shards:
 
   tb:
     github: greenbigfrog/tipbot-common
-    commit: d18767f86e96454ad8c882eee35d001708d8cf1c
+    commit: dd9a956d72f761b3e53faaa12598c02761a52ef6
 
   tb-worker:
     github: greenbigfrog/tipbot-worker
