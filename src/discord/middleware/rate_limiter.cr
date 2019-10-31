@@ -5,9 +5,9 @@ class MW::RateLimiter
 
   def initialize
     @limiter = ::RateLimiter(Discord::Snowflake).new
-    @limiter.bucket(:intense, 1_u32, 2.minutes)
-    @limiter.bucket(:guild, 5_u32, 10.seconds)
-    @limiter.bucket(:user, 2_u32, 10.seconds)
+    @limiter.bucket(:intense, 1_u32, 10.seconds)
+    @limiter.bucket(:guild, 2_u32, 1.seconds)
+    @limiter.bucket(:user, 5_u32, 10.seconds)
 
     @intense = {"soak", "rain"}
   end
