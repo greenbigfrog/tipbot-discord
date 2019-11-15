@@ -173,7 +173,7 @@ class DiscordBot
       when .starts_with? "support"
         reply(msg, "For support please visit <http://tipbot.gbf.re>")
       when .starts_with? "github"
-        reply(msg, "To contribute to the development of the tipbot visit <https://github.com/greenbigfrog/discordtipbot/>")
+        reply(msg, "To contribute to the development of the tipbot visit <https://github.com/greenbigfrog/tipbot-main>")
       when .starts_with? "invite"
         reply(msg, "You can add this bot to your own guild using following URL: <https://discordapp.com/oauth2/authorize?&client_id=#{@coin.discord_client_id}&scope=bot>")
       when .starts_with? "uptime"
