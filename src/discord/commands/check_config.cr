@@ -17,9 +17,9 @@ class CheckConfig
     fields << Discord::EmbedField.new("Min Tip", ctx[ConfigMiddleware].get_decimal_config(msg, "min_tip").to_s, true)
 
     client.create_message(msg.channel_id,
-      ZWS,
+      "Any member with the ADMINISTRATOR permission can update the configuration at https://tipbot.info/configuration/guild?id=#{ctx[ConfigMiddleware].guild_id(msg)}",
       Discord::Embed.new(
-        description: "This commands represents the config of the current server. Edit it with `config`",
+        description: "This is the current configuration for this guild",
         fields: fields))
     yield
   end
