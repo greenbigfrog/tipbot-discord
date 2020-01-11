@@ -11,6 +11,6 @@ class ErrorCatcher
     puts ex.inspect_with_backtrace
 
     # Truncate all payloads for now
-    Raven.capture(Exception.new("Exception while handling message #{payload.to_s[0..2000]}"))
+    Raven.capture(Exception.new("Exception while handling message #{payload.to_s[0..2000]}", ex))
   end
 end
