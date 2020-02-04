@@ -26,7 +26,7 @@ shards:
 
   discordcr:
     github: greenbigfrog/discordcr
-    commit: ce3a13c28e76976965d9bbaae88a02131da2b55f
+    commit: 9ef2bdce723dc927430aa71b1e5f9aed41b54c23
 
   discordcr-middleware:
     github: z64/discordcr-middleware
@@ -58,9 +58,9 @@ shards:
 
   tb:
     github: greenbigfrog/tipbot-common
-    commit: b9f69a2c8281d69dc8338162840477a01048bc4c
+    commit: a24a9438c677551e7ae2fa1774c816b983448f86
 
   tb-worker:
     github: greenbigfrog/tipbot-worker
-    commit: ef9fa3e84df8f10758a97e5dc2eb84c930a54462
+    commit: 9884a6d83c4bcb5ef57892ffd70802ddb97685c1
 
