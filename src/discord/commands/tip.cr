@@ -43,7 +43,7 @@ class Tip
     res = TB::Data::Account.transfer(amount: amount, coin: @coin, from: msg.author.id.to_u64.to_i64, to: id.to_u64.to_i64, platform: :discord, memo: :tip)
     if res.is_a?(TB::Data::Error)
       return client.create_message(msg.channel_id, "**ERROR**: Insufficient Balance") if res.reason == "insufficient balance"
-      client.create_message(msg.channel_id, "**ERROR**: There was a problem trying to transfer funds#{res.reason ? " (#{res.reason})" : nil}. Please try again later. If the problem persists, please visit the support server at #{TB::SUPPORT}")
+      client.create_message(msg.channel_id, "**ERROR**: There was a problem trying to transfer funds#{res.reason ? " (#{res.reason})" : nil}. Please try again later. If the problem persists, please visit the support server at <#{TB::SUPPORT}>")
     else
       client.create_message(msg.channel_id, "#{msg.author.username} tipped **#{amount} #{@coin.name_short}** to **#{to.username}**")
     end

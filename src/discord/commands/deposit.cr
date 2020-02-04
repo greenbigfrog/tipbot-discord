@@ -14,7 +14,7 @@ class Deposit
 
     address = TB::Data::DepositAddress.read_or_create(@coin, TB::Data::Account.read(:discord, msg.author.id.to_u64.to_i64))
     if address.is_a?(TB::Data::Error)
-      return client.create_message(msg.channel_id, "Something went wrong. Please try again later, or request help at #{TB::SUPPORT}")
+      return client.create_message(msg.channel_id, "Something went wrong. Please try again later, or request help at <#{TB::SUPPORT}>")
     end
 
     begin
