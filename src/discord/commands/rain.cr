@@ -3,7 +3,7 @@ class DiscordBot
 
   def rain(msg, ctx)
     unless ctx[ConfigMiddleware].get_config(msg, "rain")
-      return reply(msg, "`#{@coin.prefix}rain` is disabled on this server. Any member with the ADMINISTRATOR permission can update the configuration at https://tipbot.info/configuration/guild?id=#{ctx[ConfigMiddleware].guild_id(msg)}")
+      return reply(msg, "`#{@coin.prefix}rain` is disabled on this server. Any member with the ADMINISTRATOR permission can update the configuration at https://cryptobutler.info/configuration/guild?id=#{ctx[ConfigMiddleware].guild_id(msg)}")
     end
 
     cmd_usage = "#{@coin.prefix}rain [amount]"

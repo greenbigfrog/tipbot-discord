@@ -169,7 +169,7 @@ class DiscordBot
       when .starts_with? "terms"
         reply(msg, TB::TERMS)
       when .starts_with? "status"
-        reply(msg, "Visit <https://status.tipbot.info> for status information")
+        reply(msg, "Visit <https://status.cryptobutler.info> for status information")
       when .starts_with? "support"
         reply(msg, "For support please visit <http://tipbot.gbf.re>")
       when .starts_with? "github"

@@ -15,7 +15,7 @@ class Soak
     guild_id = guild_id.to_u64
 
     unless ctx[ConfigMiddleware].get_config(msg, "soak")
-      return client.create_message(msg.channel_id, "`#{@coin.prefix}soak` is disabled on this server. Any member with the ADMINISTRATOR permission can update the configuration at https://tipbot.info/configuration/guild?id=#{ctx[ConfigMiddleware].guild_id(msg)}")
+      return client.create_message(msg.channel_id, "`#{@coin.prefix}soak` is disabled on this server. Any member with the ADMINISTRATOR permission can update the configuration at https://cryptobutler.info/configuration/guild?id=#{ctx[ConfigMiddleware].guild_id(msg)}")
     end
 
     cmd_usage = "#{@coin.prefix}soak [amount]"

@@ -9,7 +9,7 @@ class Prefix
 
     str = <<-STR
     Current prefix is `#{ctx[ConfigMiddleware].get_prefix(msg)}`
-    Any member with the ADMINISTRATOR permission can update the prefix at https://tipbot.info/configuration/guild?id=#{ctx[ConfigMiddleware].guild_id(msg)}
+    Any member with the ADMINISTRATOR permission can update the prefix at https://cryptobutler.info/configuration/guild?id=#{ctx[ConfigMiddleware].guild_id(msg)}
     STR
 
     client.create_message(msg.channel_id, str)
