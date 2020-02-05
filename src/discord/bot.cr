@@ -218,6 +218,7 @@ class DiscordBot
     #   end
     # end
 
+    bot_icon_url = @bot.get_current_user.avatar_url
     @bot.on_guild_create(error) do |payload|
       id = payload.id.to_u64.to_i64
       if TB::Data::Discord::Guild.new?(id, @coin)
@@ -234,7 +235,8 @@ class DiscordBot
             Discord::EmbedField.new(name: "Membercount", value: payload.member_count.to_s),
           ]
         )
-        TB::Worker::WebhookJob.new(webhook_type: "general", embed: embed.to_json).enqueue
+        TB::Worker::WebhookJob.new(webhook_type: "general", embed: embed.to_json,
+          avatar_url: bot_icon_url, username: @coin.name_long).enqueue
       end
     end
 

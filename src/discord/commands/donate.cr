@@ -31,12 +31,13 @@ class Donate
 
       embed = Discord::Embed.new(
         title: "Donation",
-        thumbnail: Discord::EmbedThumbnail.new("https://cdn.discordapp.com/avatars/#{msg.author.id.to_u64}/#{msg.author.avatar}.png"),
+        thumbnail: Discord::EmbedThumbnail.new(msg.author.avatar_url),
         colour: 0x6600ff_u32,
         timestamp: Time.now,
         fields: fields
       )
-      TB::Worker::WebhookJob.new(webhook_type: "general", embed: embed.to_json).enqueue
+      TB::Worker::WebhookJob.new(webhook_type: "general", embed: embed.to_json,
+        avatar_url: client.get_current_user.avatar_url, username: @coin.name_long).enqueue
     end
     yield
   end

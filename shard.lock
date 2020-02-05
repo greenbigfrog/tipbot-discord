@@ -62,5 +62,5 @@ shards:
 
   tb-worker:
     github: greenbigfrog/tipbot-worker
-    commit: 9884a6d83c4bcb5ef57892ffd70802ddb97685c1
+    commit: cc715fe90bd5bc570d92ee7eb3f8ff1e4c2a38d5
 
