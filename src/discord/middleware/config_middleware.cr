@@ -11,7 +11,12 @@ class ConfigMiddleware
 
   def get_prefix(msg)
     return @coin.prefix if @cache.not_nil!.resolve_channel(msg.channel_id).type == Discord::ChannelType::DM
-    TB::Data::Discord::Guild.read_prefix(guild_id(msg), @coin) || @coin.prefix
+    guild_prefix = nil
+    begin
+      guild_prefix = TB::Data::Discord::Guild.read_prefix(guild_id(msg), @coin)
+    rescue ex : DB::PoolRetryAttemptsExceeded
+    end
+    guild_prefix || @coin.prefix
   end
 
   def get_config(msg : Discord::Message, memo : String)
