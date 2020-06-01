@@ -15,10 +15,10 @@ module Crometheus
       # Crometheus.alias LatencyHistogram = Crometheus::Histogram[:event]
 
       def initialize(@registry = Crometheus.default_registry)
-        @events = EventCounter.new(
-          :discord_events_total,
-          "Total number of Discord WS Events received.",
-          @registry)
+        # @events = EventCounter.new(
+        #   :discord_events_total,
+        #   "Total number of Discord WS Events received.",
+        #   @registry)
         # @latency = LatencyHistogram.new(
         #   :discord_latency_seconds,
         #   "Latency of receiving WS event. (Requires accurate clock for meaningful values.)",
@@ -26,7 +26,7 @@ module Crometheus
       end
 
       def call(event, _ctx)
-        @events[event: event[0]].inc
+        # @events[event: event[0]].inc
 
         # @latency[event: event[0]].observe time_diff
 
@@ -45,6 +45,8 @@ class DiscordBot
   include Utilities
   include TB::StringSplit
 
+  @bot_icon_url : String?
+
   def initialize(@coin : TB::Data::Coin, @bot : Discord::Client, @cache : Discord::Cache, @log : Logger)
     @log.debug("#{@coin.name_short}: starting bot: #{@coin.name_long}")
     @active_users_cache = ActivityCache.new(10.minutes)
@@ -61,11 +63,6 @@ class DiscordBot
     typing = TriggerTyping.new
     bot_admin = BotAdmin.new(@coin)
 
-    spawn do
-      server = HTTP::Server.new([Crometheus.default_registry.get_handler])
-      server.bind_tcp "0.0.0.0", 5000
-      server.listen
-    end
     @bot.on_dispatch(Crometheus::Middleware::DiscordCollector.new)
 
     @bot.on_message_create(error, config, Command.new("ping"),
@@ -218,26 +215,8 @@ class DiscordBot
     #   end
     # end
 
-    bot_icon_url = @bot.get_current_user.avatar_url
     @bot.on_guild_create(error) do |payload|
-      id = payload.id.to_u64.to_i64
-      if TB::Data::Discord::Guild.new?(id, @coin)
-        TB::Worker::NewGuildJob.new(guild_id: id, coin: @coin.id, guild_name: payload.name, owner: payload.owner_id.to_u64.to_i64).enqueue
-
-        owner = @cache.resolve_user(payload.owner_id)
-        embed = Discord::Embed.new(
-          title: payload.name,
-          thumbnail: Discord::EmbedThumbnail.new("https://cdn.discordapp.com/icons/#{payload.id}/#{payload.icon}.png"),
-          colour: 0x00ff00_u32,
-          timestamp: Time.now,
-          fields: [
-            Discord::EmbedField.new(name: "Owner", value: "#{owner.username}##{owner.discriminator}; <@#{owner.id}>"),
-            Discord::EmbedField.new(name: "Membercount", value: payload.member_count.to_s),
-          ]
-        )
-        TB::Worker::WebhookJob.new(webhook_type: "general", embed: embed.to_json,
-          avatar_url: bot_icon_url, username: @coin.name_long).enqueue
-      end
+      handle_guild_create(payload)
     end
 
     @bot.on_guild_create(error) do |payload|
@@ -275,6 +254,49 @@ class DiscordBot
         @active_users_cache.prune
       end
     end
+  end
+
+  private def bot_icon_url
+    @bot_icon_url ||= @bot.get_current_user.avatar_url
+  end
+
+  @next_new_guild_run : Time = Time.now
+
+  private def handle_guild_create(payload)
+    if Time.now > @next_new_guild_run
+      @next_new_guild_run += 500.milliseconds
+    else
+      sleep Time.now - @next_new_guild_run + 1.seconds
+      handle_guild_create(payload)
+      return
+    end
+
+    id = payload.id.to_u64.to_i64
+
+    begin
+      bot_new_in_guild = TB::Data::Discord::Guild.new?(id, @coin)
+    rescue ex : DB::PoolRetryAttemptsExceeded
+      sleep 5.seconds
+      handle_guild_create(payload)
+      return
+    end
+
+    return unless bot_new_in_guild
+    return unless TB::Worker::NewGuildJob.new(guild_id: id, coin: @coin.id, guild_name: payload.name, owner: payload.owner_id.to_u64.to_i64).enqueue
+
+    owner = @cache.resolve_user(payload.owner_id)
+    embed = Discord::Embed.new(
+      title: payload.name,
+      thumbnail: Discord::EmbedThumbnail.new("https://cdn.discordapp.com/icons/#{payload.id}/#{payload.icon}.png"),
+      colour: 0x00ff00_u32,
+      timestamp: Time.now,
+      fields: [
+        Discord::EmbedField.new(name: "Owner", value: "#{owner.username}##{owner.discriminator}; <@#{owner.id}>"),
+        Discord::EmbedField.new(name: "Membercount", value: payload.member_count.to_s),
+      ]
+    )
+    TB::Worker::WebhookJob.new(webhook_type: "general", embed: embed.to_json,
+      avatar_url: bot_icon_url, username: @coin.name_long).enqueue
   end
 
   # Since there is no easy way, just to reply to a message

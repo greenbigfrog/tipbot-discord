@@ -42,6 +42,12 @@ class DiscordTipBot
       end
       log.debug("finished forking")
 
+      # spawn do
+      #   server = HTTP::Server.new([Crometheus.default_registry.get_handler])
+      #   server.bind_tcp "0.0.0.0", 5000
+      #   server.listen
+      # end
+
       log.info("All bots should be running now")
     end
     sleep
