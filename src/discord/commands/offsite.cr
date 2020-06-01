@@ -56,7 +56,7 @@ class Offsite
       embed = Discord::Embed.new(
         title: "Info",
         colour: 0x9933ff_u32,
-        timestamp: Time.now,
+        timestamp: Time.utc,
         fields: fields
       )
       client.create_message(msg.channel_id, "", embed)
@@ -67,7 +67,7 @@ class Offsite
       embed = Discord::Embed.new(
         title: "Status",
         colour: 0x00ccff_u32,
-        timestamp: Time.now,
+        timestamp: Time.utc,
         fields: [
           Discord::EmbedField.new(name: "Wallet Balance", value: "#{wallet} #{@coin.name_short}"),
           Discord::EmbedField.new(name: "Users Balance", value: "#{users} #{@coin.name_short}"),

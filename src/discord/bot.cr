@@ -174,7 +174,7 @@ class DiscordBot
       when .starts_with? "invite"
         reply(msg, "You can add this bot to your own guild using following URL: <https://discordapp.com/oauth2/authorize?&client_id=#{@coin.discord_client_id}&scope=bot>")
       when .starts_with? "uptime"
-        reply(msg, "Bot has been running for #{Time.now - TB::START_TIME}")
+        reply(msg, "Bot has been running for #{Time.utc - TB::START_TIME}")
       end
     end
 
@@ -238,7 +238,7 @@ class DiscordBot
     # warn users that the tipbot shouldn't be used as wallet if their balance exceeds @coin.high_balance
     # raven_spawn do
     #   Discord.every(1.hours) do
-    #     if Set{6, 18}.includes?(Time.now.hour)
+    #     if Set{6, 18}.includes?(Time.utc.hour)
     #       users = @tip.get_high_balance(@coin.high_balance)
 
     #       users.each do |x|
@@ -260,13 +260,13 @@ class DiscordBot
     @bot_icon_url ||= @bot.get_current_user.avatar_url
   end
 
-  @next_new_guild_run : Time = Time.now
+  @next_new_guild_run : Time = Time.utc
 
   private def handle_guild_create(payload)
-    if Time.now > @next_new_guild_run
+    if Time.utc > @next_new_guild_run
       @next_new_guild_run += 500.milliseconds
     else
-      sleep Time.now - @next_new_guild_run + 1.seconds
+      sleep Time.utc - @next_new_guild_run + 1.seconds
       handle_guild_create(payload)
       return
     end
@@ -289,7 +289,7 @@ class DiscordBot
       title: payload.name,
       thumbnail: Discord::EmbedThumbnail.new("https://cdn.discordapp.com/icons/#{payload.id}/#{payload.icon}.png"),
       colour: 0x00ff00_u32,
-      timestamp: Time.now,
+      timestamp: Time.utc,
       fields: [
         Discord::EmbedField.new(name: "Owner", value: "#{owner.username}##{owner.discriminator}; <@#{owner.id}>"),
         Discord::EmbedField.new(name: "Membercount", value: payload.member_count.to_s),
@@ -368,7 +368,7 @@ class DiscordBot
   #       title: "It's time to send some coins off site",
   #       description: "Please remove **#{missing} #{@coin.name_short}** from the bot and to your own wallet! `#{@coin.prefix}offsite send`",
   #       colour: 0x0066ff_u32,
-  #       timestamp: Time.now,
+  #       timestamp: Time.utc,
   #       fields: offsite_fields(users, wallet, current_percentage, goal_percentage * 100)
   #     )
   #     TB::Worker::WebhookJob.new(webhook_type: "admin", embed: embed.to_json).enqueue
@@ -390,7 +390,7 @@ class DiscordBot
   #       title: "It's time to send some coins back to the bot",
   #       description: "Please deposit **#{missing} #{@coin.name_short}** to the bot (your own `#{@coin.prefix}offsite address`)",
   #       colour: 0xff0066_u32,
-  #       timestamp: Time.now,
+  #       timestamp: Time.utc,
   #       fields: offsite_fields(users, wallet, current_percentage, goal_percentage * 100)
   #     )
   #     TB::Worker::WebhookJob.new(webhook_type: "admin", embed: embed.to_json).enqueue
@@ -408,12 +408,12 @@ class DiscordBot
   # end
 
   # private def wait_for_balance_change(old_balance : BigDecimal, compare : Compare)
-  #   time = Time.now
+  #   time = Time.utc
 
   #   new_balance = 0
 
   #   loop do
-  #     return if (Time.now - time) > 10.minutes
+  #     return if (Time.utc - time) > 10.minutes
   #     new_balance = @tip.node_balance(0)
   #     break if new_balance > old_balance if compare.bigger?
   #     break if new_balance < old_balance if compare.smaller?
@@ -423,7 +423,7 @@ class DiscordBot
   #   embed = Discord::Embed.new(
   #     title: "Success",
   #     colour: 0x00ff00_u32,
-  #     timestamp: Time.now,
+  #     timestamp: Time.utc,
   #     fields: [Discord::EmbedField.new(name: "New wallet balance", value: "#{new_balance} #{@coin.name_short}")]
   #   )
   #   TB::Worker::WebhookJob.new(webhook_type: "admin", embed: embed.to_json).enqueue

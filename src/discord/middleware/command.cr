@@ -3,7 +3,7 @@ class Command
 
   getter name : String
   getter command : Array(String) = Array(String).new
-  getter time : Time = Time.utc_now
+  getter time : Time = Time.utc
 
   def initialize(@cmd : String | Array(String))
     cmd = @cmd
@@ -11,7 +11,7 @@ class Command
   end
 
   def call(payload, ctx)
-    @time = Time.utc_now
+    @time = Time.utc
     cmd = @cmd
     if cmd.is_a?(Array(String))
       cmd_regex = ""

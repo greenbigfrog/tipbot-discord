@@ -33,7 +33,7 @@ class Donate
         title: "Donation",
         thumbnail: Discord::EmbedThumbnail.new(msg.author.avatar_url),
         colour: 0x6600ff_u32,
-        timestamp: Time.now,
+        timestamp: Time.utc,
         fields: fields
       )
       TB::Worker::WebhookJob.new(webhook_type: "general", embed: embed.to_json,
