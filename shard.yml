@@ -8,7 +8,7 @@ targets:
   discord:
     main: src/discord.cr
 
-crystal: 0.30.1
+crystal: 0.34.0
 
 license: MIT
 

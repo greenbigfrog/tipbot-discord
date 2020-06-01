@@ -1,4 +1,4 @@
-FROM crystallang/crystal:0.30.1
+FROM crystallang/crystal:0.34.0
 ADD . /src
 WORKDIR /src
 RUN crystal build --release --static -s src/discord-entrypoint.cr

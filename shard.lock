@@ -2,11 +2,11 @@ version: 1.0
 shards:
   ameba:
     github: veelenga/ameba
-    version: 0.11.0
+    version: 0.12.1
 
   any_hash:
     github: sija/any_hash.cr
-    commit: 1907068cdbfc3ef9759954194472b82f9f19c6e4
+    commit: 0b3a1b3690158c547ebae913634c4cb8b9bfba8d
 
   bitcoin_rpc:
     github: citizen428/bitcoin_rpc
@@ -26,7 +26,7 @@ shards:
 
   discordcr:
     github: greenbigfrog/discordcr
-    commit: 9ef2bdce723dc927430aa71b1e5f9aed41b54c23
+    commit: 7c2817547deb841548a5383b8f78ed7708622728
 
   discordcr-middleware:
     github: z64/discordcr-middleware
@@ -34,7 +34,7 @@ shards:
 
   mosquito:
     github: robacarp/mosquito
-    version: 0.5.0
+    version: 0.8.0
 
   pg:
     github: greenbigfrog/crystal-pg
@@ -46,21 +46,21 @@ shards:
 
   rate_limiter:
     github: z64/rate_limiter
-    commit: b9992a7c474f9f863aa34ac677244d6b520cba97
+    commit: e63f0b1d8e17105d7dc8bb875462693caf221499
 
   raven:
     github: sija/raven.cr
-    version: 1.5.5
+    version: 1.6.0
 
   redis:
     github: stefanwille/crystal-redis
-    version: 2.1.1
+    version: 2.6.0
 
   tb:
     github: greenbigfrog/tipbot-common
-    commit: 0a42e647ffe077f3926198e43d8b50305aa33efe
+    commit: 13dd75ad62ba664a3d4f4289275346c788e8a778
 
   tb-worker:
     github: greenbigfrog/tipbot-worker
-    commit: cc715fe90bd5bc570d92ee7eb3f8ff1e4c2a38d5
+    commit: 54c583e112083dc4027bc3eda32b1e74a1e6b01d
 
