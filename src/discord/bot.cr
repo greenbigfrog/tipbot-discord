@@ -312,7 +312,7 @@ class DiscordBot
   end
 
   private def update_game(name : String)
-    @bot.status_update("online", Discord::GamePlaying.new(name, 0_i64))
+    @bot.status_update("online", Discord::GamePlaying.new(name, Discord::GamePlaying::Type::Playing))
   end
 
   private def dm_deposit(userid : UInt64)
