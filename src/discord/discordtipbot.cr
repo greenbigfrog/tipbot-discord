@@ -32,7 +32,7 @@ class DiscordTipBot
         raven_spawn(name: "#{coin.name_short} Bot") do
           token = coin.discord_token
           raise "Missing Discord Token" unless token
-          bot = Discord::Client.new(token)
+          bot = Discord::Client.new(token, zlib_buffer_size: 10 * 1024 * 1024 * 2)
           cache = Discord::Cache.new(bot)
           shared_cache.bind(cache)
           bot.cache = cache
