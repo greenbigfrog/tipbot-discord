@@ -44,7 +44,6 @@ class Soak
         users << x.user.id.to_u64.to_i64 unless x.user.id.to_u64 == msg.author.id.to_u64
         cache.cache(x.user)
       end
-      break if new_users.size < 1000
     end
 
     # TODO only soak people that can view the channel
